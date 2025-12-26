@@ -3,11 +3,13 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-export default function LoginPage() {
+export default function SignupPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    password: '',
+    passwordConfirm: '',
+    username: ''
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -20,11 +22,41 @@ export default function LoginPage() {
     setError('');
   };
 
+  const validateForm = () => {
+    if (!formData.email || !formData.password || !formData.passwordConfirm || !formData.username) {
+      setError('모든 필드를 입력해주세요.');
+      return false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError('올바른 이메일 형식이 아닙니다.');
+      return false;
+    }
+
+    if (formData.password.length < 8) {
+      setError('비밀번호는 8자 이상이어야 합니다.');
+      return false;
+    }
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]/;
+    if (!passwordRegex.test(formData.password)) {
+      setError('비밀번호는 영문 대소문자, 숫자, 특수문자를 포함해야 합니다.');
+      return false;
+    }
+
+    if (formData.password !== formData.passwordConfirm) {
+      setError('비밀번호가 일치하지 않습니다.');
+      return false;
+    }
+
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.email || !formData.password) {
-      setError('이메일과 비밀번호를 입력해주세요.');
+    if (!validateForm()) {
       return;
     }
 
@@ -33,7 +65,7 @@ export default function LoginPage() {
 
     try {
       const response = await fetch(
-        'https://h1l7cj53v9.execute-api.ap-northeast-2.amazonaws.com/dev/auth/login',
+        'https://h1l7cj53v9.execute-api.ap-northeast-2.amazonaws.com/dev/auth/signup',
         {
           method: 'POST',
           headers: {
@@ -41,7 +73,8 @@ export default function LoginPage() {
           },
           body: JSON.stringify({
             email: formData.email,
-            password: formData.password
+            password: formData.password,
+            username: formData.username
           }),
         }
       );
@@ -49,26 +82,10 @@ export default function LoginPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || '로그인에 실패했습니다.');
+        throw new Error(data.error || '회원가입에 실패했습니다.');
       }
 
-      // JWT 토큰 저장
-      if (data.token) {
-        localStorage.setItem('authToken', data.token);
-        localStorage.setItem('userEmail', formData.email);
-      }
-
-      // paymentStatus에 따라 페이지 분기
-      const paymentStatus = data.paymentStatus || 'trial';
-
-      if (paymentStatus === 'trial') {
-        // 미입금 유저 → P00-1 오늘의 운세
-        router.push('/fortune');
-      } else if (paymentStatus === 'active') {
-        // 입금완료 유저 → P04 챌린지 홈 (향후 구현)
-        alert('로그인 성공! (입금 완료 회원)');
-        router.push('/fortune');
-      }
+      router.push(`/confirm?email=${encodeURIComponent(formData.email)}`);
 
     } catch (err) {
       setError(err.message);
@@ -93,8 +110,8 @@ export default function LoginPage() {
       <main className="max-w-md mx-auto px-4 py-12">
         <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">로그인</h1>
-            <p className="text-gray-600">자기성찰 여정을 이어가세요</p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">회원가입</h1>
+            <p className="text-gray-600">자기성찰 여정을 시작해보세요</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -111,7 +128,22 @@ export default function LoginPage() {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 placeholder="your@email.com"
                 disabled={loading}
-                autoFocus
+              />
+            </div>
+
+            <div>
+              <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
+                이름
+              </label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                placeholder="홍길동"
+                disabled={loading}
               />
             </div>
 
@@ -126,7 +158,26 @@ export default function LoginPage() {
                 value={formData.password}
                 onChange={handleChange}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                placeholder="비밀번호를 입력하세요"
+                placeholder="8자 이상 (대소문자, 숫자, 특수문자 포함)"
+                disabled={loading}
+              />
+              <p className="mt-1 text-xs text-gray-500">
+                영문 대소문자, 숫자, 특수문자를 포함한 8자 이상
+              </p>
+            </div>
+
+            <div>
+              <label htmlFor="passwordConfirm" className="block text-sm font-medium text-gray-700 mb-2">
+                비밀번호 확인
+              </label>
+              <input
+                type="password"
+                id="passwordConfirm"
+                name="passwordConfirm"
+                value={formData.passwordConfirm}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                placeholder="비밀번호를 다시 입력하세요"
                 disabled={loading}
               />
             </div>
@@ -142,42 +193,25 @@ export default function LoginPage() {
               disabled={loading}
               className="w-full py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
             >
-              {loading ? '로그인 중...' : '로그인'}
+              {loading ? '처리 중...' : '회원가입'}
             </button>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
-              아직 계정이 없으신가요?{' '}
+              이미 계정이 있으신가요?{' '}
               <button
-                onClick={() => router.push('/signup')}
+                onClick={() => router.push('/login')}
                 className="text-indigo-600 hover:text-indigo-700 font-semibold"
               >
-                회원가입
+                로그인
               </button>
             </p>
           </div>
-
-          <div className="mt-4 text-center">
-            <button
-              onClick={() => alert('비밀번호 찾기 기능은 추후 구현 예정입니다.')}
-              className="text-sm text-gray-500 hover:text-gray-700"
-            >
-              비밀번호를 잊으셨나요?
-            </button>
-          </div>
         </div>
 
-        <div className="mt-8 text-center">
-          <p className="text-sm text-gray-600 mb-3">
-            먼저 체험해보고 싶으신가요?
-          </p>
-          <button
-            onClick={() => router.push('/fortune')}
-            className="text-indigo-600 hover:text-indigo-700 font-semibold"
-          >
-            오늘의 운세 보기 →
-          </button>
+        <div className="mt-8 text-center text-sm text-gray-500">
+          <p>회원가입 시 이메일로 인증 코드가 발송됩니다</p>
         </div>
       </main>
     </div>

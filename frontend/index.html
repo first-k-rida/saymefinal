@@ -1,0 +1,17 @@
+cd C:\sayme\dev\frontend
+
+# index.html 생성
+@"
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sayme - 자기성찰 챌린지</title>
+    <meta http-equiv="refresh" content="0;url=/login/login.html">
+</head>
+<body>
+    <p>로딩 중...</p>
+</body>
+</html>
+"@ | Out-File -FilePath out\index.html -Encoding utf8
