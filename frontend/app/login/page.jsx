@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -52,23 +52,15 @@ export default function LoginPage() {
         throw new Error(data.error || '로그인에 실패했습니다.');
       }
 
-      // JWT 토큰 저장
-      if (data.token) {
-        localStorage.setItem('authToken', data.token);
+      if (data.tokens) {
+        localStorage.setItem('accessToken', data.tokens.accessToken);
+        localStorage.setItem('idToken', data.tokens.idToken);
+        localStorage.setItem('refreshToken', data.tokens.refreshToken);
         localStorage.setItem('userEmail', formData.email);
       }
 
-      // paymentStatus에 따라 페이지 분기
-      const paymentStatus = data.paymentStatus || 'trial';
-
-      if (paymentStatus === 'trial') {
-        // 미입금 유저 → P00-1 오늘의 운세
-        router.push('/fortune');
-      } else if (paymentStatus === 'active') {
-        // 입금완료 유저 → P04 챌린지 홈 (향후 구현)
-        alert('로그인 성공! (입금 완료 회원)');
-        router.push('/fortune');
-      }
+      alert('로그인 성공!');
+      router.push('/me');
 
     } catch (err) {
       setError(err.message);
@@ -160,7 +152,7 @@ export default function LoginPage() {
 
           <div className="mt-4 text-center">
             <button
-              onClick={() => alert('비밀번호 찾기 기능은 추후 구현 예정입니다.')}
+              onClick={() => router.push('/forgot-password')}
               className="text-sm text-gray-500 hover:text-gray-700"
             >
               비밀번호를 잊으셨나요?
