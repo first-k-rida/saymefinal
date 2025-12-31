@@ -1,0 +1,15 @@
+{
+  "name": "sayme-public-fortune",
+  "version": "1.0.0",
+  "description": "오늘의 운세 조회 Lambda 함수",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test-local.js",
+    "package": "zip -r function.zip index.js node_modules package.json"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.709.0",
+    "@aws-sdk/lib-dynamodb": "^3.709.0"
+  },
+  "devDependencies": {}
+}

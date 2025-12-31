@@ -1,0 +1,13 @@
+{
+  "name": "fortune-messages-seeder",
+  "version": "1.0.0",
+  "description": "FortuneMessages 테이블 샘플 데이터 삽입",
+  "main": "insert-fortune-messages.js",
+  "scripts": {
+    "seed": "node insert-fortune-messages.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.709.0",
+    "@aws-sdk/lib-dynamodb": "^3.709.0"
+  }
+}

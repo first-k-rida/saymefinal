@@ -1,0 +1,7 @@
+{
+  "Name": "admin-spirit-lab-me-oac",
+  "Description": "OAC for admin.spirit-lab.me",
+  "SigningProtocol": "sigv4",
+  "SigningBehavior": "always",
+  "OriginAccessControlOriginType": "s3"
+}

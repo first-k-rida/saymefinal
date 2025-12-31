@@ -1,0 +1,56 @@
+{
+  "CallerReference": "admin-spirit-lab-me-20251224141402",
+  "Aliases": {
+    "Quantity": 1,
+    "Items": ["admin.spirit-lab.me"]
+  },
+  "DefaultRootObject": "index.html",
+  "Origins": {
+    "Quantity": 1,
+    "Items": [
+      {
+        "Id": "admin.spirit-lab.me.s3.ap-northeast-2.amazonaws.com",
+        "DomainName": "admin.spirit-lab.me.s3.ap-northeast-2.amazonaws.com",
+        "OriginPath": "",
+        "S3OriginConfig": {
+          "OriginAccessIdentity": ""
+        },
+        "OriginAccessControlId": "E1WXQRE145BCHA"
+      }
+    ]
+  },
+  "DefaultCacheBehavior": {
+    "TargetOriginId": "admin.spirit-lab.me.s3.ap-northeast-2.amazonaws.com",
+    "ViewerProtocolPolicy": "redirect-to-https",
+    "AllowedMethods": {
+      "Quantity": 2,
+      "Items": ["HEAD", "GET"],
+      "CachedMethods": {
+        "Quantity": 2,
+        "Items": ["HEAD", "GET"]
+      }
+    },
+    "Compress": true,
+    "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6"
+  },
+  "CustomErrorResponses": {
+    "Quantity": 1,
+    "Items": [
+      {
+        "ErrorCode": 404,
+        "ResponsePagePath": "/index.html",
+        "ResponseCode": "200",
+        "ErrorCachingMinTTL": 300
+      }
+    ]
+  },
+  "Comment": "CloudFront for admin.spirit-lab.me",
+  "Enabled": true,
+  "ViewerCertificate": {
+    "ACMCertificateArn": "arn:aws:acm:us-east-1:119778517834:certificate/41be0e17-087d-4535-8e3b-13b80d388969",
+    "SSLSupportMethod": "sni-only",
+    "MinimumProtocolVersion": "TLSv1.2_2021"
+  },
+  "HttpVersion": "http2",
+  "IsIPV6Enabled": true
+}

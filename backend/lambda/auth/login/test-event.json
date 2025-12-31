@@ -1,0 +1,4 @@
+﻿{
+  "httpMethod": "POST",
+  "body": "{\"email\":\"philo.productiongroup@gmail.com\",\"code\":\"097879\"}"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "sayme-auth-forgot-password",
+  "version": "1.0.0",
+  "description": "Cognito forgot password",
+  "main": "index.js",
+  "dependencies": {
+    "@aws-sdk/client-cognito-identity-provider": "^3.645.0"
+  }
+}

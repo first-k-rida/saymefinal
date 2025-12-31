@@ -1,0 +1,9 @@
+{
+  "name": "sayme-auth-signup",
+  "version": "1.0.0",
+  "description": "Sayme 회원가입 Lambda 함수",
+  "main": "index.js",
+  "dependencies": {
+    "@aws-sdk/client-cognito-identity-provider": "^3.600.0"
+  }
+}

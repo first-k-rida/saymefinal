@@ -1,0 +1,1 @@
+{"statusCode":200,"headers":{"Access-Control-Allow-Origin":"*","Access-Control-Allow-Headers":"Content-Type","Access-Control-Allow-Methods":"POST, OPTIONS","Content-Type":"application/json"},"body":"{\"success\":true,\"message\":\"비밀번호 재설정 코드가 이메일로 전송되었습니다.\"}"}

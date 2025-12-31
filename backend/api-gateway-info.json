@@ -1,0 +1,32 @@
+﻿{
+    "region":  "ap-northeast-2",
+    "apiId":  "h1l7cj53v9",
+    "endpoints":  {
+                      "confirm":  {
+                                      "url":  "https://h1l7cj53v9.execute-api.ap-northeast-2.amazonaws.com/dev/auth/confirm",
+                                      "method":  "POST",
+                                      "path":  "/auth/confirm"
+                                  },
+                      "me":  {
+                                 "url":  "https://h1l7cj53v9.execute-api.ap-northeast-2.amazonaws.com/dev/auth/me",
+                                 "method":  "GET",
+                                 "path":  "/auth/me"
+                             },
+                      "logout":  {
+                                     "url":  "https://h1l7cj53v9.execute-api.ap-northeast-2.amazonaws.com/dev/auth/logout",
+                                     "method":  "POST",
+                                     "path":  "/auth/logout"
+                                 },
+                      "signup":  {
+                                     "url":  "https://h1l7cj53v9.execute-api.ap-northeast-2.amazonaws.com/dev/auth/signup",
+                                     "method":  "POST",
+                                     "path":  "/auth/signup"
+                                 },
+                      "login":  {
+                                    "url":  "https://h1l7cj53v9.execute-api.ap-northeast-2.amazonaws.com/dev/auth/login",
+                                    "method":  "POST",
+                                    "path":  "/auth/login"
+                                }
+                  },
+    "baseUrl":  "https://h1l7cj53v9.execute-api.ap-northeast-2.amazonaws.com/dev"
+}

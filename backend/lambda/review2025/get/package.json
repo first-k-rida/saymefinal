@@ -1,0 +1,11 @@
+{
+  "name": "sayme-review2025-lambda",
+  "version": "1.0.0",
+  "description": "2025 돌아보기 Lambda 함수",
+  "main": "index.js",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.712.0",
+    "@aws-sdk/lib-dynamodb": "^3.712.0",
+    "aws-jwt-verify": "^4.0.1"
+  }
+}
